@@ -10,6 +10,7 @@ public abstract class Account implements Serializable {
     protected Double balance;
     protected Costumer costumer;
     protected Integer password;
+    protected Card cards[];
 
     public Account(Integer number, Integer agency, Double balance, Costumer costumer, Integer password) {
         this.number = number;
@@ -17,6 +18,7 @@ public abstract class Account implements Serializable {
         this.balance = balance;
         this.costumer = costumer;
         this.password = password;
+
     }
 
     protected void setNumber(Integer number) {
