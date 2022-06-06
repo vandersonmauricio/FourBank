@@ -4,8 +4,8 @@ public class SavingsAccount extends Account {
     private Double yield;
     private Integer anniversary;
 
-    public SavingsAccount(Integer number, Integer agency, Double balance, Costumer costumer, Integer password, double yield, int anniversary) {
-        super(number, agency, balance, costumer, password);
+    public SavingsAccount(Integer number, Integer agency, Double balance, Client client, Integer password, double yield, int anniversary) {
+        super(number, agency, balance, client, password);
         this.anniversary = anniversary;
         this.yield = yield;
     }
