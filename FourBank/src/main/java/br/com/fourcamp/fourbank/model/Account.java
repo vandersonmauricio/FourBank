@@ -8,17 +8,15 @@ public abstract class Account implements Serializable {
     protected Integer number;
     protected Integer agency;
     protected Double balance;
-    protected Costumer costumer;
+    protected Client client;
     protected Integer password;
-    protected Card cards[];
 
-    public Account(Integer number, Integer agency, Double balance, Costumer costumer, Integer password) {
+    public Account(Integer number, Integer agency, Double balance, Client client, Integer password) {
         this.number = number;
         this.agency = agency;
         this.balance = balance;
-        this.costumer = costumer;
+        this.client = client;
         this.password = password;
-
     }
 
     protected void setNumber(Integer number) {
@@ -41,12 +39,12 @@ public abstract class Account implements Serializable {
         this.balance = balance;
     }
 
-    protected Costumer getCostumer() {
-        return costumer;
+    protected Client getCostumer() {
+        return client;
     }
 
-    protected void setCostumer(Costumer costumer) {
-        this.costumer = costumer;
+    protected void setCostumer(Client client) {
+        this.client = client;
     }
 
     protected Integer getPassword() {
@@ -63,7 +61,7 @@ public abstract class Account implements Serializable {
                 " número = " + number +
                 ", agência = " +
                 ", saldo =" + balance +
-                ", cliente = " + costumer +
+                ", cliente = " + client +
                 '}';
     }
 }

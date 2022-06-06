@@ -3,8 +3,8 @@ package br.com.fourcamp.fourbank.model;
 public class CheckingAccount extends Account {
     private Double maintenance;
 
-    public CheckingAccount(Integer number, Integer agency, Double balance, Costumer costumer, Integer password, Double maintenance) {
-        super(number, agency, balance, costumer, password);
+    public CheckingAccount(Integer number, Integer agency, Double balance, Client client, Integer password, Double maintenance) {
+        super(number, agency, balance, client, password);
         this.maintenance = maintenance;
     }
 
@@ -16,7 +16,7 @@ public class CheckingAccount extends Account {
         this.maintenance = maintenance;
     }
 
-    public double dicountFee(){
+    public double discountFee(){
         balance -= balance * maintenance;
         return balance;
     }
