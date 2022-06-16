@@ -1,7 +1,9 @@
 package com.fourcamp.linkbank.service;
 
+import com.fourcamp.linkbank.model.Extract;
 import com.fourcamp.linkbank.model.Transaction;
-import com.fourcamp.linkbank.repository.TransactionRepository;
+import com.fourcamp.linkbank.model.TransactionTransfer;
+import com.fourcamp.linkbank.repository.ExtractRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +13,20 @@ import java.util.List;
 public class TransactionService {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private ExtractRepository extractRepository;
 
-    public List<Transaction> listAll(){
-        return transactionRepository.findAll();
-    }
+    public void insertTransaction(Transaction transaction){
+        Extract extract = new Extract();
 
-    public Object insertTransaction(Transaction transaction){
-        return transactionRepository.save(transaction);
+        if (transaction instanceof TransactionTransfer){
+            extract.setDescription("Transferência");
+        } else {
+            extract.setDescription("Pix");
+        }
+
+        extract.setValue(transaction.getValue());
+        extract.setAccount(transaction.getAccount());
+
+        extractRepository.save(extract);
     }
 }

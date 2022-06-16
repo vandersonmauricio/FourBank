@@ -1,40 +1,22 @@
 package com.fourcamp.linkbank.model;
 
-import javax.persistence.*;
+import java.time.LocalDate;
 
-@Entity
 public abstract class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "transaction_id")
-    private Long id;
 
-    @Column(nullable = false)
     private Double value;
 
-    @Column(nullable = false)
-    private String date;
+    private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
     private Account account;
 
-    public Transaction(Long id, Double value, String date, Account account) {
-        this.id = id;
+    public Transaction(Double value, String date, Account account) {
         this.value = value;
-        this.date = date;
+        this.date = LocalDate.now();
         this.account = account;
     }
 
     public Transaction() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Double getValue() {
@@ -46,10 +28,10 @@ public abstract class Transaction {
     }
 
     public String getDate() {
-        return date;
+        return date.toString();
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

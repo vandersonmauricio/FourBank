@@ -1,16 +1,11 @@
 package com.fourcamp.linkbank.model;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 public class TransactionPix extends Transaction{
 
-    @Column(nullable = false)
     private String pixKey;
 
-    public TransactionPix(String id, Double value, String date, Account account, String pixKey) {
-        super(Long.valueOf(id), value, date, account);
+    public TransactionPix(Double value, String date, Account account, String pixKey) {
+        super(value, date, account);
         this.pixKey = pixKey;
     }
 

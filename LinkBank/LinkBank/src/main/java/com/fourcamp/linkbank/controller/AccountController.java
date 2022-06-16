@@ -1,12 +1,21 @@
 package com.fourcamp.linkbank.controller;
 
 import com.fourcamp.linkbank.model.Account;
-import org.springframework.web.bind.annotation.PutMapping;
+import com.fourcamp.linkbank.service.ExtractService;
+import com.fourcamp.linkbank.service.TransactionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "account")
 public class AccountController {
+
+    @Autowired
+    TransactionService transactionService;
+
+    @Autowired
+    ExtractService extractService;
+
     @GetMapping("/balance")
     public Double getBalance(@RequestBody Account account) {
 
@@ -72,7 +81,7 @@ public class AccountController {
             return "Não foi possivel acessar seu extrato!";
         }
 
-        return message;
+        return extractService.listById(account.getId()).toString();
     }
 
     @PostMapping("/account/pix/email")

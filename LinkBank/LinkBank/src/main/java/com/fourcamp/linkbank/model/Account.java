@@ -27,6 +27,18 @@ public class Account {
    @JoinColumn(name = "id")
    private Pix pix;
 
+   public Account(Long id, String number, String agency, Double balance, Client client, Pix pix) {
+      this.id = id;
+      this.number = number;
+      this.agency = agency;
+      this.balance = balance;
+      this.client = client;
+      this.pix = pix;
+   }
+
+   public Account() {
+   }
+
    public Long getId() {
       return id;
    }
