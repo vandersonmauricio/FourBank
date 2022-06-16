@@ -1,5 +1,6 @@
 package com.fourcamp.linkbank.service;
 
+import com.fourcamp.linkbank.enums.ExtractTypeEnum;
 import com.fourcamp.linkbank.model.Extract;
 import com.fourcamp.linkbank.model.Transaction;
 import com.fourcamp.linkbank.model.TransactionTransfer;
@@ -19,9 +20,9 @@ public class TransactionService {
         Extract extract = new Extract();
 
         if (transaction instanceof TransactionTransfer){
-            extract.setDescription("Transferência");
+            extract.setDescription(ExtractTypeEnum.TRANSFER.getKey());
         } else {
-            extract.setDescription("Pix");
+            extract.setDescription(ExtractTypeEnum.PIX.getKey());
         }
 
         extract.setValue(transaction.getValue());
