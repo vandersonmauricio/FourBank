@@ -14,9 +14,6 @@ public class Card {
     protected String number;
 
     @Column(nullable = false)
-    protected String flag;
-
-    @Column(nullable = false)
     protected String password;
 
     @Column(nullable = false)
@@ -30,13 +27,10 @@ public class Card {
     protected Double monthlyBill;
 
     @Column
-    private boolean debitCard;
-
-    @Column
-    private boolean creditCard;
-
-    @Column
     private Double monthlyLimit;
+
+    @Column
+    private String cardType;
 
     @Column(nullable = false)
     private Double dailyLimit;
@@ -55,18 +49,16 @@ public class Card {
     public Card() {
     }
 
-    public Card(Long id, String number, String flag, String password, Boolean isActive, Account account, Double monthlyBill, boolean debitCard, boolean creditCard, Double monthlyLimit, Double dailyLimit) {
+    public Card(Long id, String number, String password, Boolean isActive, Account account, Double monthlyBill, Double monthlyLimit, Double dailyLimit, String cardType) {
         this.id = id;
         this.number = number;
-        this.flag = flag;
         this.password = password;
         this.isActive = isActive;
         this.account = account;
         this.monthlyBill = monthlyBill;
-        this.debitCard = debitCard;
-        this.creditCard = creditCard;
         this.monthlyLimit = monthlyLimit;
         this.dailyLimit = dailyLimit;
+        this.cardType = cardType;
     }
 
     public String getNumber() {
@@ -77,13 +69,6 @@ public class Card {
         this.number = number;
     }
 
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
-    }
 
     public String getPassword() {
         return password;
@@ -117,22 +102,6 @@ public class Card {
         this.monthlyBill = monthlyBill;
     }
 
-    public boolean isDebitCard() {
-        return debitCard;
-    }
-
-    public void setDebitCard(boolean debitCard) {
-        this.debitCard = debitCard;
-    }
-
-    public boolean isCreditCard() {
-        return creditCard;
-    }
-
-    public void setCreditCard(boolean creditCard) {
-        this.creditCard = creditCard;
-    }
-
     public Double getMonthlyLimit() {
         return monthlyLimit;
     }
@@ -147,5 +116,13 @@ public class Card {
 
     public void setDailyLimit(Double dailyLimit) {
         this.dailyLimit = dailyLimit;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
     }
 }

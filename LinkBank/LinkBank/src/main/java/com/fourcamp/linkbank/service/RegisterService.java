@@ -1,60 +1,90 @@
 package com.fourcamp.linkbank.service;
 
+import com.fourcamp.linkbank.enums.TypeClientEnum;
+import com.fourcamp.linkbank.model.Account;
+import com.fourcamp.linkbank.model.Card;
 import com.fourcamp.linkbank.model.Client;
+import com.fourcamp.linkbank.repository.AccountRepository;
+import com.fourcamp.linkbank.repository.CardRepository;
+import com.fourcamp.linkbank.repository.ClientRepository;
+import com.fourcamp.linkbank.utils.Validations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.Random;
 
+@Service
 public class RegisterService {
 
-    public void register(Client client){
+    @Autowired
+    AccountRepository accountRepository;
 
-        /*
-            verificar se cliente ja existe
-            if(client.cpf == clientBD.cpf){
-                CLIENTE COM MESMO CPF JA EXISTE
-                return;
+    @Autowired
+    ClientRepository clientRepository;
+
+    @Autowired
+    CardRepository cardRepository;
+
+    public String register(Client client) {
+        Card card = new Card();
+        Account account = new Account();
+        String number = createDigit(5) + "-" + createDigit(1);
+        String cardNumber = createDigit(4) + " " + createDigit(4) + " " + createDigit(4) + " " + createDigit(4);
+
+        Client clientExist = clientRepository.findClientByCpf(client.getCpf());
+
+        try {
+            if (clientExist != null){
+                return "Cliente já existe!";
             }
-         */
+        } catch (NullPointerException e){
 
-
-       /* //define tipo do cliente com base na renda
-        client.setTypeClientEnum(changeTypeClient(client.getIncome()));
-
-        //adicionar regex para todos os dados
-
-        System.out.println(client.getTypeClientEnum());
-        //manda client pro banco de dados
-    */
-        //prontinho
-    }
-
-
-
-    public void update(Client client){
-        /*
-        if(client.getCPF()==clientBD.getCPF()){
-            atualiza todos os cliente
         }
-         */
 
-    }
-
-    public void updatePassword(Client client){
-        /*
-            if(client.getCPF() == clientBD.getCPF(){
-                clientBD.setPassword(client.getPassword());
-            }
-         */
-    }
-
-    /*public Enum changeTypeClient(Double income) {
-        Enum type = null;
-        if (income < 2000) {
-            type = TypeClientEnum.BASIC;
-        } else if (income >= 2000 && income < 5000) {
-            type = TypeClientEnum.SUPER;
-        } else if (income >= 5000) {
-            type = TypeClientEnum.PREMIUM;
+        if (client.getIncome() <= 2000){
+            card.setCardType(TypeClientEnum.BASIC.getKey());
+        } else if (client.getIncome() <= 5000){
+            card.setCardType(TypeClientEnum.SUPER.getKey());
+        } else {
+            card.setCardType(TypeClientEnum.PREMIUM.getKey());
         }
-        return type;
-    }*/
+
+        if (!Validations.isCellPhone(client.getCellphone()) || !Validations.isCpf(client.getCpf()) || !Validations.isEmail(client.getEmail())){
+            return "Dados inválidos!";
+        }
+
+        if (client.getPassword().length() < 8){
+            return "Senha inválida!";
+        }
+
+        account.setClient(client);
+        account.setNumber(number);
+        account.setAgency("0001");
+
+        card.setNumber(cardNumber);
+        card.setActive(true);
+        card.setAccount(account);
+
+        accountRepository.save(account);
+        cardRepository.save(card);
+
+        return "Conta criada com sucesso!";
+    }
+
+
+    public void update(Account account) {
+        accountRepository.save(account);
+    }
+
+    public String createDigit(int quantity){
+        String digits = "";
+
+        Random random = new Random();
+        for(int x = 0; x<quantity; x++){
+            Integer number = random.nextInt(0,10);
+            digits += number.toString();
+
+        }
+        return digits ;
+    }
 }
